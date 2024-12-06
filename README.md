@@ -736,7 +736,7 @@ id date       Total_Very_Active_Minutes Total_Calories
  9                          63.8
 10                          93.4
 ```
-***Vizualization for Correlation of Calories with Active Minutes**
+**Vizualization for Correlation of Calories with Active Minutes**
 ```
 active_minutes_calories %>%
   ggplot(aes(x = Total_Very_Active_Minutes, y = Total_Calories, color = Calories_Per_VeryActiveMinute)) +
