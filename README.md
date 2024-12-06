@@ -311,7 +311,9 @@ daily_sleep <- rename_with(daily_sleep, tolower)
 ## 10   1.50e9 4/24/201…                   1                  430               449
 ## # ℹ 400 more rows
 ```
+
 **Check the data again to verify that changes has been effected**
+
 ```
 head(daily_activity)
 ```
@@ -388,6 +390,7 @@ head(daily_sleep)
 ## 6 1503960366 4/19/2016 12:0…                 1                304            320
 ```
 **Convert datetime format for all files to make it consistent**
+
 In daily_sleep the date formats are not consistent, so we are making all in a single format. 
 For our hourly_calories, hourly_intensities and hourly_steps dataset, I will convert date string to date-time. For daily_activity and daily_sleep we are converting using as.Date format.
 
