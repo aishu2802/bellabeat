@@ -387,3 +387,71 @@ head(daily_sleep)
 ## 5 1503960366 4/17/2016 12:0…                 1                700            712
 ## 6 1503960366 4/19/2016 12:0…                 1                304            320
 ```
+**Convert datetime format for all files to make it consistent**
+In daily_sleep the date formats are not consistent, so we are making all in a single format. 
+For our hourly_calories, hourly_intensities and hourly_steps dataset, I will convert date string to date-time. For daily_activity and daily_sleep we are converting using as.Date format.
+
+```
+#daily_sleep
+daily_sleep <- daily_sleep %>%
+  mutate(
+    sleepday = case_when(
+      grepl("\\d+/\\d+/\\d+ \\d+:\\d+:\\d+ [APap][Mm]", sleepday) ~ 
+        as.character(as.POSIXct(sleepday, format = "%m/%d/%Y %I:%M:%S %p", tz = Sys.timezone())),
+      grepl("\\d{2}-\\d{2}-\\d{4} \\d{2}:\\d{2}", sleepday) ~ 
+        as.character(as.POSIXct(sleepday, format = "%m-%d-%Y %H:%M", tz = Sys.timezone())),
+      TRUE ~ NA_character_  # Mark rows with unrecognized formats as NA
+    )
+  )
+daily_sleep$sleepday <- as.Date(daily_sleep$sleepday, format = "%Y-%m-%d")
+daily_sleep <- daily_sleep %>%
+  rename(date = sleepday) 
+class(daily_sleep$date)
+```
+```
+## [1] "Date"
+```
+
+```
+#daily_activity
+daily_activity$activitydate <- as.Date(daily_activity$activitydate, format = "%d-%m-%Y")
+daily_activity <- daily_activity %>%
+  rename(date = activitydate)
+class(daily_activity$date)
+```
+```
+## [1] "Date"
+```
+
+```
+##hourly_calories
+hourly_calories <- hourly_calories %>% 
+  rename(date_time = activityhour) %>% 
+  mutate(date_time = as.POSIXct(date_time, format ="%m/%d/%Y %I:%M:%S %p" , tz=Sys.timezone()))
+class(hourly_calories$date_time)
+```
+```
+## [1] "POSIXct" "POSIXt"
+```
+
+```
+##hourly_intensities
+hourly_intensities <- hourly_intensities %>% 
+  rename(date_time = activityhour) %>% 
+  mutate(date_time = as.POSIXct(date_time, format ="%m/%d/%Y %I:%M:%S %p" , tz=Sys.timezone()))
+class(hourly_intensities$date_time)
+```
+```
+## [1] "POSIXct" "POSIXt"
+```
+
+```
+##hourly_steps
+hourly_steps<- hourly_steps %>% 
+  rename(date_time = activityhour) %>% 
+  mutate(date_time = as.POSIXct(date_time, format ="%m/%d/%Y %I:%M:%S %p" , tz=Sys.timezone()))
+class(hourly_steps$date_time)
+```
+```
+## [1] "POSIXct" "POSIXt"
+```
