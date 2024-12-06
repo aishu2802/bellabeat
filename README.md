@@ -1,4 +1,4 @@
-# BELLABEAT Case Study 
+# Google Data Analytics Capstone: Bellabeat data analysis case study.
 ## INTRODUCTION
 This case study presents a data analysis project conducted as part of the Google Data Analytics Professional Certificate course, Capstone Project, focusing on the usage of Bellabeat Smart Devices. Bellabeat is a high-tech manufacturer of health-focused smart products designed specifically for women.
 
@@ -504,7 +504,254 @@ plot_ly(activity_summary, labels = ~ActivityType, values = ~Minutes,
 ```
 ```
 **Key Observations from the Chart:**
-Percentage of active minutes in the four categories: very active, fairly active, lightly active and sedentary.
-The major issue here is the large portion of time spent sedentary and the minimal time spent in high-intensity activities (very active and fairly active).
-This pattern is common in modern lifestyles but can have serious consequences for long-term health. Gradually increase the percentage of time spent in moderate-to-vigorous activities.
+#Percentage of active minutes in the four categories: very active, fairly active, lightly active and sedentary.
+#The major issue here is the large portion of time spent sedentary and the minimal time spent in high-intensity activities (very active and fairly active).
+#This pattern is common in modern lifestyles but can have serious consequences for long-term health. Gradually increase the percentage of time spent in moderate-to-vigorous activities.
 ```
+**Calculation of Calories Per Distance by Day**
+```
+calories_per_distance <- daily_activity %>%
+  mutate(WeekDay = weekdays(date)) %>%
+  mutate(WeekDay = ordered(WeekDay, levels = c("Monday", "Tuesday", "Wednesday", "Thursday", 
+                                               "Friday", "Saturday", "Sunday"))) %>%
+  group_by(WeekDay) %>%
+  summarise(
+    calories_per_day = sum(calories, na.rm = TRUE),
+    distance_per_day = sum(totaldistance, na.rm = TRUE),
+    calories_per_distance = round(sum(calories, na.rm = TRUE) / sum(totaldistance, na.rm = TRUE), 2)
+  )
+print(calories_per_distance)
+```
+```
+## # A tibble: 6 × 4
+##   WeekDay   calories_per_day distance_per_day calories_per_distance
+##   <ord>                <dbl>            <dbl>                 <dbl>
+## 1 Monday              278905             666.35                  419.56
+## 2 Tuesday             358114             886.50                  404.96
+## 3 Wednesday           345393             823.25                  420.55
+## 4 Thursday            323337             781.90                  414.06
+## 5 Friday              293805             669.05                  439.14
+## 6 Saturday            292016             726.98                  402.24
+## 7 Sunday              273823             608. 29                 450.15
+```
+**Vizualization for Calculation of Calories Per Distance by Day**
+```
+ggplot(calories_per_distance, aes(x = WeekDay, y = calories_per_distance, group = 1)) +
+  geom_line(color = "darkblue", linewidth = 1.2) + 
+  geom_point(color = "lightblue", size = 3) +  
+  scale_y_continuous(labels = scales::comma) + 
+  labs(
+    title = "Total Calories Burned Per Distance by Weekday",
+    x = "Weekday",
+    y = "Calories Per Distance"
+  )
+```
+```
+**Key Observations from the Chart:**
+#It is observed that Sundays exhibit a relatively high proportion of calories burned per distance compared to other days of the week.
+#Leisure time on Sundays may lead users to engage in deliberate, higher-intensity physical activities.
+#Fridays Show the Second-Highest Calories Burned per Distance, this may indicate, End-of-week activities that differ from the routine, such as evening walks, gym sessions, or sports.
+#Weekdays (Monday to Friday) show a consistent range of 404–439 calories per distance, this could be attributed to a structured routine during the workweek, balancing moderate activity levels.
+#Saturday has the lowest value means less intense physical activity.
+```
+**Sleep Patterns by Day of the Week**
+```
+sleep_data_summary <- daily_sleep %>%
+    mutate(Weekdays = wday(`date`, label = TRUE, week_start = 1)) %>%
+    group_by(Weekdays) %>%
+    summarize(
+      Avg_Minutes_Asleep = mean(totalminutesasleep), 
+      Avg_Time_In_Bed = mean(totaltimeinbed)
+    ) %>%
+    arrange(Weekdays) %>%
+    pivot_longer(
+      cols = c(Avg_Minutes_Asleep, Avg_Time_In_Bed), 
+      names_to = "Category", 
+      values_to = "Value"
+    ) %>%
+    mutate(Value = round(Value, 2))  # Round the Value column
+  head(sleep_data_summary)
+```
+```
+## # A tibble: 6 × 3
+##   Weekdays Category           Value
+##   <ord>    <chr>              <dbl>
+## 1 Mon      Avg_Minutes_Asleep  420.50
+## 2 Mon      Avg_Time_In_Bed     457.35
+## 3 Tue      Avg_Minutes_Asleep  405.54
+## 4 Tue      Avg_Time_In_Bed     443.29
+## 5 Wed      Avg_Minutes_Asleep  435.68
+## 6 Wed      Avg_Time_In_Bed     470.03
+```
+**Visualization for Sleep Patterns by Day of the Week**
+```
+ggplot(sleep_data_summary, aes(x = Weekdays, y = Value, fill = Category)) +
+   geom_bar(stat = "identity", position = position_dodge(width = 0.8)) +
+   scale_fill_manual(values = c("Avg_Minutes_Asleep" = "blue", "Avg_Time_In_Bed" = "orange")) + 
+   scale_y_continuous(labels = scales::label_number(accuracy = 1)) +  # Fully qualified function call
+   labs(
+    title = "Sleep Behavior by Day of the Week",
+    x = "Day of Week",
+    y = "Minutes",
+    fill = "Legend"
+    )
+```
+```
+**Key Observations from the Chart:**
+#Sunday being the highest average sleep time (452.75 minutes, ~7.5 hours) and longest time in bed (503.51 minutes, ~8.4 hours).
+#This indicates users might catch up on sleep on Sundays, reflecting a common recovery trend after a busy week. This is likely an effort to recover from sleep deficits accumulated during the week.
+#In the graphs above we can deduce that users don’t take the recommended amount of sleep of 8 hours(480minutes).
+```
+**Steps per weekdays88
+```
+weekday_steps <- daily_activity %>%
+  mutate(weekday = weekdays(date))
+weekday_steps$weekday <-ordered(weekday_steps$weekday, levels=c("Monday", "Tuesday", "Wednesday", "Thursday",  "Friday", "Saturday", "Sunday"))
+
+weekday_steps <-weekday_steps %>%
+  group_by(weekday) %>%
+  summarize (daily_steps = sprintf("%.2f", mean(totalsteps)))
+print(weekday_steps)
+```
+```
+ weekday   daily_steps
+  <ord>     <chr>      
+1 Monday    7780.87    
+2 Tuesday   8125.01    
+3 Wednesday 7559.37    
+4 Thursday  7405.84    
+5 Friday    7448.23    
+6 Saturday  8152.98    
+7 Sunday    6933.23
+```
+**Vizualization for Steps per weekdays**
+```
+ggplot(data = weekday_steps, aes(x = weekday, y = as.numeric(daily_steps))) + 
+  geom_bar(stat = "identity",fill = 'lightblue',width = 0.8) +
+  geom_hline(yintercept = 7500)+
+  labs(
+    title = "Weekly Average Steps Distribution",
+    x = "Weekday",
+    y = "Daily Steps"
+  ) +
+  scale_y_continuous(breaks = seq(0, 10000, by = 2000))
+```
+**Key Observations from the Chart:**
+
+- Most users are consistent with their daily steps routine, except Sunday which more like a relaxation day.
+- Weekdays show consistent step counts averaging around 7,700 steps. This consistency suggests a routine influenced by daily schedules like work or commuting.
+- Saturdays are the most active, likely due to non-workday opportunities for movement. As per 2011 CDC study 7,500–9,999 Steps per day is considered as Somewhat active.
+- Most of the people who are using the BellaBeat product is achieving there weekly steps goals.
+
+**Hourly steps throughout the day**
+```
+hourly_steps <- hourly_steps %>%
+  mutate(
+    date = format(date_time, "%Y-%m-%d"),  
+    time = format(date_time, "%H:%M:%S")   
+  ) %>%
+  mutate(date = ymd(date)) %>%  
+  select(id, date, time, steptotal) %>%  
+  group_by(time) %>%  
+  summarize(average_steps = mean(steptotal))  # Calculate average steps for each time
+
+head(hourly_steps)
+```
+```
+## # A tibble: 6 × 2
+##   time     average_steps
+##   <chr>            <dbl>
+## 1 00:00:00         42.2 
+## 2 01:00:00         23.1 
+## 3 02:00:00         17.1 
+## 4 03:00:00          6.43
+## 5 04:00:00         12.7 
+## 6 05:00:00         43.9
+```
+**Vizualization for Hourly steps throughout the day**
+```
+ggplot(hourly_steps, aes(x = time, y = average_steps, fill = average_steps)) +  # Map fill to average_steps
+  geom_bar(stat = "identity") +  
+  scale_fill_gradient(low = "lightblue", high = "darkblue") +  
+  labs(
+    title = "Hourly Step Activity", 
+    x = "Time of Day", 
+    y = "Average Steps"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+**Key Observations from the Chart:**
+
+- The hour of 6 p.m. is when the greatest average number of steps is recorded.
+- It appears from this data that people are more likely to be physically active in the evening. After finishing their work for the day, individuals might head to the gym or go for a walk , as the majority of the activity takes place between 5pm to 7 p.m.
+
+**Correlation of Calories with Active Minutes**
+```
+active_minutes_calories <- daily_activity %>%
+  group_by(id, date) %>%
+  summarise(
+    Total_Very_Active_Minutes = sum(veryactiveminutes, na.rm = TRUE),  # Sum of Very Active Minutes
+    Total_Calories = sum(calories, na.rm = TRUE)  # Sum of Calories
+  ) %>%
+  ungroup() %>%
+  mutate(
+      Calories_Per_VeryActiveMinute = if_else(Total_Very_Active_Minutes == 0, NA_real_, Total_Calories / Total_Very_Active_Minutes),
+      Calories_Per_VeryActiveMinute = Total_Calories / Total_Very_Active_Minutes  # Calculate calories per very active minute
+  )
+head(active_minutes_calories)
+```
+```
+id date       Total_Very_Active_Minutes Total_Calories
+        <dbl> <date>                         <dbl>          <dbl>
+ 1 1503960366 2016-04-12                        25           1985
+ 2 1503960366 2016-04-13                        21           1797
+ 3 1503960366 2016-04-14                        30           1776
+ 4 1503960366 2016-04-15                        29           1745
+ 5 1503960366 2016-04-16                        36           1863
+ 6 1503960366 2016-04-17                        38           1728
+ 7 1503960366 2016-04-18                        42           1921
+ 8 1503960366 2016-04-19                        50           2035
+ 9 1503960366 2016-04-20                        28           1786
+10 1503960366 2016-04-21                        19           1775
+   Calories_Per_VeryActiveMinute
+                           <dbl>
+ 1                          79.4
+ 2                          85.6
+ 3                          59.2
+ 4                          60.2
+ 5                          51.8
+ 6                          45.5
+ 7                          45.7
+ 8                          40.7
+ 9                          63.8
+10                          93.4
+```
+***Vizualization for Correlation of Calories with Active Minutes**
+```
+active_minutes_calories %>%
+  ggplot(aes(x = Total_Very_Active_Minutes, y = Total_Calories, color = Calories_Per_VeryActiveMinute)) +
+  geom_point() +
+  scale_color_gradient(low = "lightblue", high = "darkblue") +  
+  labs(title = "Correlation Between Active Minutes and Calorie Burn", 
+       x = "Total Very Active Minutes", 
+       y = "Total Calories Burned") +
+  theme_minimal()
+```
+**Key Observations from the Chart:**
+
+- There is a more pronounced positive relationship between VeryActiveMinutes and calories burned.
+- Even a small increase in VeryActiveMinutes leads to a meaningful increase in calories burned, demonstrating the disproportionate impact of intensity compared to activity duration alone.
+- I assume we can encourage individuals to include even short bursts of high-intensity workouts (e.g., interval training) in their routines for maximum calorie burn.
+
+## Act
+**Insights from the Analysis**
+- The analysis highlights key patterns in activity and sleep behaviour. Prolonged sedentary time (81.3%) and insufficient high-intensity activities increase health risks, emphasizing the need to reduce inactivity. 
+- Sleep duration averages 6.7–7.5 hours, slightly below the recommended 7–9 hours, suggesting a focus on better sleep hygiene to improve rest quality.
+- Step counts generally meet or exceed the 7,500-step baseline, with peak activity in the evening (5–7 PM). While Sundays are restful with improved sleep, they are marked by reduced activity, underscoring the importance of maintaining consistent physical activity throughout the week.
+-  This summary encapsulates the overall findings based on the insights derived from the data analysis.
+## Recommendations
+- **Personalized Activity and Lifestyle Goals:** Set activity and step targets based on users’ past performance, lifestyle, or preferences, customizable during sign-up. Offer calorie-tracking features or integrate with third-party apps to align physical activity data with dietary goals. Provide meal suggestions or personalized diet plans and include hydration reminders to encourage a balanced lifestyle.
+- **Sedentary and Heart Rate Alerts:** Notify users to engage in light activities after prolonged inactivity with prompts like, “You’ve been sedentary for 2 hours; take a 5-minute walk!”. Additionally, monitor heart rate and send alerts for abnormal fluctuations, ensuring timely action if thresholds are exceeded.
+- **Sleep and Recovery Insights:** Provide tailored advice for improving sleep routines, such as setting a regular bedtime, reducing screen time, or relaxing before sleep. Include tips for creating a restful environment and maintaining consistent recovery practices.
+- **Weekly Dashboard:** Summarize weekly activity, calories burned, and sleep performance with improvement tips in a user-friendly dashboard. Share a detailed summary every Sunday to help users track progress and adopt healthier habits.
+- **Motivational Features and Social Engagement:** Incorporate gamified elements like streaks, badges, and friendly competitions to keep users motivated. Include period tracking features to help users monitor their menstrual cycles, including reminders for expected periods, ovulation, and tips for managing symptoms.
