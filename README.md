@@ -54,6 +54,11 @@ Only 30 user data is available. The central limit theorem general rule of n≥30
 ## PROCESS
 I will be choosing R for this project because, while I have some experience with tools like SQL and Excel, R is a new and exciting tool for me. My only exposure to R so far has been during this Certification course. R allows me to perform data cleaning, processing, and visualization efficiently within a single platform, making it an excellent choice for managing and presenting data insights effectively.
 
+**Setting up my working directory**
+```R
+setwd("/cloud/project/BellaBeat/")
+```
+**Setting up my environment by loading the packages**
 ```R
 install.packages("tidyverse")
 install.packages("skimr")
@@ -63,4 +68,89 @@ install.packages("ggplot2")
 install.packages("tidyr")
 install.packages("lubridate")
 install.packages("plotly")
+```
+```R
+library("tidyverse")
+library ("skimr")
+library("janitor")
+library("dplyr")
+library("ggplot2")
+library("tidyr")
+library("lubridate")
+library("plotly")
+```
+**Reading .csv files**
+```R
+daily_activity <- read_csv("dailyActivity_merged.csv")
+View(daily_activity)
+
+hourly_calories <- read_csv("hourlyCalories_merged.csv")
+View(hourly_calories)
+
+hourly_intensities <- read_csv("hourlyIntensities_merged.csv")
+View(hourly_intensities)
+
+hourly_steps <- read_csv("hourlySteps_merged.csv")
+View(hourly_steps)
+
+daily_sleep <- read_csv("sleepDay_merged.csv")
+View(daily_sleep)
+```
+**Display the first few rows of each dataframe**
+```R
+head(daily_activity)
+head(hourly_calories)
+head(hourly_intensities)
+head(hourly_steps)
+head(daily_sleep)
+```
+**Check the number of unique participants in each data set by counting distinct IDs**
+```R
+n_unique(daily_activity$Id)
+n_unique(hourly_calories$Id)
+n_unique(hourly_intensities$Id)
+n_unique(hourly_steps$Id)
+n_unique(daily_sleep$Id)
+```
+**Clean and rename columns of our datasets**
+```R
+clean_names(daily_activity)
+daily_activity <- rename_with(daily_activity, tolower)
+
+clean_names(hourly_calories)
+hourly_calories <- rename_with(hourly_calories, tolower)
+
+clean_names(hourly_intensities)
+hourly_intensities <- rename_with(hourly_intensities, tolower)
+
+clean_names(hourly_steps)
+hourly_steps <- rename_with(hourly_steps, tolower)
+
+clean_names(daily_sleep)
+daily_sleep <- rename_with(daily_sleep, tolower)
+```
+**Check the data again to verify that changes has been effected**
+```R
+head(daily_activity)
+head(hourly_calories)
+head(hourly_intensities)
+head(hourly_steps)
+head(daily_sleep)
+```
+
+```
+## # A tibble: 6 × 15
+##           id activitydate totalsteps totaldistance trackerdistance
+##        <dbl> <chr>             <dbl>         <dbl>           <dbl>
+## 1 1503960366 12-04-2016        13162          8.5             8.5 
+## 2 1503960366 13-04-2016        10735          6.97            6.97
+## 3 1503960366 14-04-2016        10460          6.74            6.74
+## 4 1503960366 15-04-2016         9762          6.28            6.28
+## 5 1503960366 16-04-2016        12669          8.16            8.16
+## 6 1503960366 17-04-2016         9705          6.48            6.48
+## # ℹ 10 more variables: loggedactivitiesdistance <dbl>,
+## #   veryactivedistance <dbl>, moderatelyactivedistance <dbl>,
+## #   lightactivedistance <dbl>, sedentaryactivedistance <dbl>,
+## #   veryactiveminutes <dbl>, fairlyactiveminutes <dbl>,
+## #   lightlyactiveminutes <dbl>, sedentaryminutes <dbl>, calories <dbl>
 ```
