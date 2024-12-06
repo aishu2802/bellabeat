@@ -503,6 +503,8 @@ plot_ly(activity_summary, labels = ~ActivityType, values = ~Minutes,
     title = 'Percentage Distribution of Active Minutes'
   )
 ```
+![piechart2](https://github.com/user-attachments/assets/6e4dcba3-cefd-4059-be42-9fd73d61e457)
+
 
 **Key Observations from the Chart:**
 - Percentage of active minutes in the four categories: very active, fairly active, lightly active and sedentary.
