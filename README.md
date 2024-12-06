@@ -1,4 +1,6 @@
 # Google Data Analytics Capstone: Bellabeat data analysis case study.
+![bellabeat](https://github.com/user-attachments/assets/3fc95ff0-ad4c-4eff-aade-72cdfa7c6487)
+
 ## INTRODUCTION
 This case study presents a data analysis project conducted as part of the Google Data Analytics Professional Certificate course, Capstone Project, focusing on the usage of Bellabeat Smart Devices. Bellabeat is a high-tech manufacturer of health-focused smart products designed specifically for women.
 
