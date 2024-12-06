@@ -99,44 +99,6 @@ View(daily_sleep)
 **Display the first few rows of each dataframe**
 ```R
 head(daily_activity)
-head(hourly_calories)
-head(hourly_intensities)
-head(hourly_steps)
-head(daily_sleep)
-```
-**Check the number of unique participants in each data set by counting distinct IDs**
-```R
-> n_unique(daily_activity$Id)
-[1] 33
-> n_unique(hourly_calories$Id)
-[1] 33
-> n_unique(hourly_intensities$Id)
-[1] 33
-> n_unique(hourly_steps$Id)
-[1] 33
-> n_unique(daily_sleep$Id)
-[1] 24
-```
-**Clean and rename columns of our datasets**
-```R
-clean_names(daily_activity)
-daily_activity <- rename_with(daily_activity, tolower)
-
-clean_names(hourly_calories)
-hourly_calories <- rename_with(hourly_calories, tolower)
-
-clean_names(hourly_intensities)
-hourly_intensities <- rename_with(hourly_intensities, tolower)
-
-clean_names(hourly_steps)
-hourly_steps <- rename_with(hourly_steps, tolower)
-
-clean_names(daily_sleep)
-daily_sleep <- rename_with(daily_sleep, tolower)
-```
-**Check the data again to verify that changes has been effected**
-```R
-head(daily_activity)
 ```
 ```
 Id ActivityDate TotalSteps TotalDistance TrackerDistance
@@ -215,6 +177,203 @@ head(hourly_steps)
 ## 6 1503960366 4/12/2016 5:00:00 AM          0
 ```
 ```R
+head(daily_sleep)
+```
+```
+## # A tibble: 6 × 5
+##           id sleepday        totalsleeprecords totalminutesasleep totaltimeinbed
+##        <dbl> <chr>                       <dbl>              <dbl>          <dbl>
+## 1 1503960366 04-12-2016 00:…                 1                327            346
+## 2 1503960366 4/13/2016 12:0…                 2                384            407
+## 3 1503960366 4/15/2016 12:0…                 1                412            442
+## 4 1503960366 4/16/2016 12:0…                 2                340            367
+## 5 1503960366 4/17/2016 12:0…                 1                700            712
+## 6 1503960366 4/19/2016 12:0…                 1                304            320
+```
+
+**Check the number of unique participants in each data set by counting distinct IDs**
+```R
+> n_unique(daily_activity$Id)
+[1] 33
+> n_unique(hourly_calories$Id)
+[1] 33
+> n_unique(hourly_intensities$Id)
+[1] 33
+> n_unique(hourly_steps$Id)
+[1] 33
+> n_unique(daily_sleep$Id)
+[1] 24
+```
+**Clean and rename columns of our datasets**
+```R
+clean_names(daily_activity)
+daily_activity <- rename_with(daily_activity, tolower)
+```
+```
+## # A tibble: 940 × 15
+##            id activity_date total_steps total_distance tracker_distance
+##         <dbl> <chr>               <dbl>          <dbl>            <dbl>
+##  1 1503960366 12-04-2016          13162           8.5              8.5 
+##  2 1503960366 13-04-2016          10735           6.97             6.97
+##  3 1503960366 14-04-2016          10460           6.74             6.74
+##  4 1503960366 15-04-2016           9762           6.28             6.28
+##  5 1503960366 16-04-2016          12669           8.16             8.16
+##  6 1503960366 17-04-2016           9705           6.48             6.48
+##  7 1503960366 18-04-2016          13019           8.59             8.59
+##  8 1503960366 19-04-2016          15506           9.88             9.88
+##  9 1503960366 20-04-2016          10544           6.68             6.68
+## 10 1503960366 21-04-2016           9819           6.34             6.34
+## # ℹ 930 more rows
+## # ℹ 10 more variables: logged_activities_distance <dbl>,
+## #   very_active_distance <dbl>, moderately_active_distance <dbl>,
+## #   light_active_distance <dbl>, sedentary_active_distance <dbl>,
+## #   very_active_minutes <dbl>, fairly_active_minutes <dbl>,
+## #   lightly_active_minutes <dbl>, sedentary_minutes <dbl>, calories <dbl>
+```
+```
+clean_names(hourly_calories)
+hourly_calories <- rename_with(hourly_calories, tolower)
+```
+```
+## # A tibble: 22,099 × 3
+##            id activity_hour         calories
+##         <dbl> <chr>                    <dbl>
+##  1 1503960366 4/12/2016 12:00:00 AM       81
+##  2 1503960366 4/12/2016 1:00:00 AM        61
+##  3 1503960366 4/12/2016 2:00:00 AM        59
+##  4 1503960366 4/12/2016 3:00:00 AM        47
+##  5 1503960366 4/12/2016 4:00:00 AM        48
+##  6 1503960366 4/12/2016 5:00:00 AM        48
+##  7 1503960366 4/12/2016 6:00:00 AM        48
+##  8 1503960366 4/12/2016 7:00:00 AM        47
+##  9 1503960366 4/12/2016 8:00:00 AM        68
+## 10 1503960366 4/12/2016 9:00:00 AM       141
+## # ℹ 22,089 more rows
+```
+```
+clean_names(hourly_intensities)
+hourly_intensities <- rename_with(hourly_intensities, tolower)
+```
+```
+## # A tibble: 22,099 × 4
+##            id activity_hour         total_intensity average_intensity
+##         <dbl> <chr>                           <dbl>             <dbl>
+##  1 1503960366 4/12/2016 12:00:00 AM              20             0.333
+##  2 1503960366 4/12/2016 1:00:00 AM                8             0.133
+##  3 1503960366 4/12/2016 2:00:00 AM                7             0.117
+##  4 1503960366 4/12/2016 3:00:00 AM                0             0    
+##  5 1503960366 4/12/2016 4:00:00 AM                0             0    
+##  6 1503960366 4/12/2016 5:00:00 AM                0             0    
+##  7 1503960366 4/12/2016 6:00:00 AM                0             0    
+##  8 1503960366 4/12/2016 7:00:00 AM                0             0    
+##  9 1503960366 4/12/2016 8:00:00 AM               13             0.217
+## 10 1503960366 4/12/2016 9:00:00 AM               30             0.5  
+## # ℹ 22,089 more rows
+```
+
+```
+clean_names(hourly_steps)
+hourly_steps <- rename_with(hourly_steps, tolower)
+```
+```
+## # A tibble: 22,099 × 3
+##            id activity_hour         step_total
+##         <dbl> <chr>                      <dbl>
+##  1 1503960366 4/12/2016 12:00:00 AM        373
+##  2 1503960366 4/12/2016 1:00:00 AM         160
+##  3 1503960366 4/12/2016 2:00:00 AM         151
+##  4 1503960366 4/12/2016 3:00:00 AM           0
+##  5 1503960366 4/12/2016 4:00:00 AM           0
+##  6 1503960366 4/12/2016 5:00:00 AM           0
+##  7 1503960366 4/12/2016 6:00:00 AM           0
+##  8 1503960366 4/12/2016 7:00:00 AM           0
+##  9 1503960366 4/12/2016 8:00:00 AM         250
+## 10 1503960366 4/12/2016 9:00:00 AM        1864
+## # ℹ 22,089 more rows
+```
+```
+clean_names(daily_sleep)
+daily_sleep <- rename_with(daily_sleep, tolower)
+```
+```
+## # A tibble: 410 × 5
+##          id sleep_day total_sleep_records total_minutes_asleep total_time_in_bed
+##       <dbl> <chr>                   <dbl>                <dbl>             <dbl>
+##  1   1.50e9 04-12-20…                   1                  327               346
+##  2   1.50e9 4/13/201…                   2                  384               407
+##  3   1.50e9 4/15/201…                   1                  412               442
+##  4   1.50e9 4/16/201…                   2                  340               367
+##  5   1.50e9 4/17/201…                   1                  700               712
+##  6   1.50e9 4/19/201…                   1                  304               320
+##  7   1.50e9 4/20/201…                   1                  360               377
+##  8   1.50e9 4/21/201…                   1                  325               364
+##  9   1.50e9 4/23/201…                   1                  361               384
+## 10   1.50e9 4/24/201…                   1                  430               449
+## # ℹ 400 more rows
+```
+**Check the data again to verify that changes has been effected**
+```
+head(daily_activity)
+```
+```
+## # A tibble: 6 × 15
+##           id activitydate totalsteps totaldistance trackerdistance
+##        <dbl> <chr>             <dbl>         <dbl>           <dbl>
+## 1 1503960366 12-04-2016        13162          8.5             8.5 
+## 2 1503960366 13-04-2016        10735          6.97            6.97
+## 3 1503960366 14-04-2016        10460          6.74            6.74
+## 4 1503960366 15-04-2016         9762          6.28            6.28
+## 5 1503960366 16-04-2016        12669          8.16            8.16
+## 6 1503960366 17-04-2016         9705          6.48            6.48
+## # ℹ 10 more variables: loggedactivitiesdistance <dbl>,
+## #   veryactivedistance <dbl>, moderatelyactivedistance <dbl>,
+## #   lightactivedistance <dbl>, sedentaryactivedistance <dbl>,
+## #   veryactiveminutes <dbl>, fairlyactiveminutes <dbl>,
+## #   lightlyactiveminutes <dbl>, sedentaryminutes <dbl>, calories <dbl>
+```
+```
+head(hourly_calories)
+```
+```
+## # A tibble: 6 × 3
+##           id activityhour          calories
+##        <dbl> <chr>                    <dbl>
+## 1 1503960366 4/12/2016 12:00:00 AM       81
+## 2 1503960366 4/12/2016 1:00:00 AM        61
+## 3 1503960366 4/12/2016 2:00:00 AM        59
+## 4 1503960366 4/12/2016 3:00:00 AM        47
+## 5 1503960366 4/12/2016 4:00:00 AM        48
+## 6 1503960366 4/12/2016 5:00:00 AM        48
+```
+```
+head(hourly_intensities)
+```
+```
+## # A tibble: 6 × 4
+##           id activityhour          totalintensity averageintensity
+##        <dbl> <chr>                          <dbl>            <dbl>
+## 1 1503960366 4/12/2016 12:00:00 AM             20            0.333
+## 2 1503960366 4/12/2016 1:00:00 AM               8            0.133
+## 3 1503960366 4/12/2016 2:00:00 AM               7            0.117
+## 4 1503960366 4/12/2016 3:00:00 AM               0            0    
+## 5 1503960366 4/12/2016 4:00:00 AM               0            0    
+## 6 1503960366 4/12/2016 5:00:00 AM               0            0
+```
+```
+head(hourly_steps)
+```
+```
+## # A tibble: 6 × 3
+##           id activityhour          steptotal
+##        <dbl> <chr>                     <dbl>
+## 1 1503960366 4/12/2016 12:00:00 AM       373
+## 2 1503960366 4/12/2016 1:00:00 AM        160
+## 3 1503960366 4/12/2016 2:00:00 AM        151
+## 4 1503960366 4/12/2016 3:00:00 AM          0
+## 5 1503960366 4/12/2016 4:00:00 AM          0
+## 6 1503960366 4/12/2016 5:00:00 AM          0
+```
+```
 head(daily_sleep)
 ```
 ```
