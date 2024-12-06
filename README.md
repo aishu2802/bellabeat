@@ -549,6 +549,8 @@ ggplot(calories_per_distance, aes(x = WeekDay, y = calories_per_distance, group 
     y = "Calories Per Distance"
   )
 ```
+![calories burned per distance](https://github.com/user-attachments/assets/252d942e-bc60-47ce-b44e-d2ecd5cc537d)
+
 
 **Key Observations from the Chart:**
 - It is observed that Sundays exhibit a relatively high proportion of calories burned per distance compared to other days of the week.
@@ -599,6 +601,7 @@ ggplot(sleep_data_summary, aes(x = Weekdays, y = Value, fill = Category)) +
     fill = "Legend"
     )
 ```
+![sleep pattern by day of week](https://github.com/user-attachments/assets/d5ae7f72-54fe-4c5f-bd87-3d11296dd606)
 
 **Key Observations from the Chart:**
 - Sunday being the highest average sleep time (452.75 minutes, ~7.5 hours) and longest time in bed (503.51 minutes, ~8.4 hours).
@@ -639,6 +642,8 @@ ggplot(data = weekday_steps, aes(x = weekday, y = as.numeric(daily_steps))) +
   ) +
   scale_y_continuous(breaks = seq(0, 10000, by = 2000))
 ```
+![weekly avg step distribution in blue colour grapgh](https://github.com/user-attachments/assets/3c09278b-63c9-4da9-a7f7-4af0fce6b84f)
+
 **Key Observations from the Chart:**
 
 - Most users are consistent with their daily steps routine, except Sunday which more like a relaxation day.
@@ -683,6 +688,8 @@ ggplot(hourly_steps, aes(x = time, y = average_steps, fill = average_steps)) +  
   ) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
+![hourly steps throughout the day](https://github.com/user-attachments/assets/ded0e9e9-2b70-4934-aa23-2276c9eab1f5)
+
 **Key Observations from the Chart:**
 
 - The hour of 6 p.m. is when the greatest average number of steps is recorded.
@@ -740,6 +747,8 @@ active_minutes_calories %>%
        y = "Total Calories Burned") +
   theme_minimal()
 ```
+![correlation of calories n active min](https://github.com/user-attachments/assets/9252a4ec-b079-4260-975b-abc0e7ebde1e)
+
 **Key Observations from the Chart:**
 
 - There is a more pronounced positive relationship between VeryActiveMinutes and calories burned.
