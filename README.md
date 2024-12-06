@@ -502,10 +502,9 @@ plot_ly(activity_summary, labels = ~ActivityType, values = ~Minutes,
     title = 'Percentage Distribution of Active Minutes'
   )
 ```
+```
 **Key Observations from the Chart:**
-
 Percentage of active minutes in the four categories: very active, fairly active, lightly active and sedentary.
-
 The major issue here is the large portion of time spent sedentary and the minimal time spent in high-intensity activities (very active and fairly active).
-
 This pattern is common in modern lifestyles but can have serious consequences for long-term health. Gradually increase the percentage of time spent in moderate-to-vigorous activities.
+```
