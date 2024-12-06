@@ -392,6 +392,7 @@ head(daily_sleep)
 **Convert datetime format for all files to make it consistent**
 
 In daily_sleep the date formats are not consistent, so we are making all in a single format. 
+
 For our hourly_calories, hourly_intensities and hourly_steps dataset, I will convert date string to date-time. For daily_activity and daily_sleep we are converting using as.Date format.
 
 ```
@@ -502,12 +503,12 @@ plot_ly(activity_summary, labels = ~ActivityType, values = ~Minutes,
     title = 'Percentage Distribution of Active Minutes'
   )
 ```
-```
+
 **Key Observations from the Chart:**
-#Percentage of active minutes in the four categories: very active, fairly active, lightly active and sedentary.
-#The major issue here is the large portion of time spent sedentary and the minimal time spent in high-intensity activities (very active and fairly active).
-#This pattern is common in modern lifestyles but can have serious consequences for long-term health. Gradually increase the percentage of time spent in moderate-to-vigorous activities.
-```
+- Percentage of active minutes in the four categories: very active, fairly active, lightly active and sedentary.
+- The major issue here is the large portion of time spent sedentary and the minimal time spent in high-intensity activities (very active and fairly active).
+- This pattern is common in modern lifestyles but can have serious consequences for long-term health. Gradually increase the percentage of time spent in moderate-to-vigorous activities.
+
 **Calculation of Calories Per Distance by Day**
 ```
 calories_per_distance <- daily_activity %>%
@@ -546,14 +547,14 @@ ggplot(calories_per_distance, aes(x = WeekDay, y = calories_per_distance, group 
     y = "Calories Per Distance"
   )
 ```
-```
+
 **Key Observations from the Chart:**
-#It is observed that Sundays exhibit a relatively high proportion of calories burned per distance compared to other days of the week.
-#Leisure time on Sundays may lead users to engage in deliberate, higher-intensity physical activities.
-#Fridays Show the Second-Highest Calories Burned per Distance, this may indicate, End-of-week activities that differ from the routine, such as evening walks, gym sessions, or sports.
+- It is observed that Sundays exhibit a relatively high proportion of calories burned per distance compared to other days of the week.
+- Leisure time on Sundays may lead users to engage in deliberate, higher-intensity physical activities.
+- Fridays Show the Second-Highest Calories Burned per Distance, this may indicate, End-of-week activities that differ from the routine, such as evening walks, gym sessions, or sports.
 #Weekdays (Monday to Friday) show a consistent range of 404–439 calories per distance, this could be attributed to a structured routine during the workweek, balancing moderate activity levels.
-#Saturday has the lowest value means less intense physical activity.
-```
+- Saturday has the lowest value means less intense physical activity.
+
 **Sleep Patterns by Day of the Week**
 ```
 sleep_data_summary <- daily_sleep %>%
@@ -596,13 +597,13 @@ ggplot(sleep_data_summary, aes(x = Weekdays, y = Value, fill = Category)) +
     fill = "Legend"
     )
 ```
-```
+
 **Key Observations from the Chart:**
-#Sunday being the highest average sleep time (452.75 minutes, ~7.5 hours) and longest time in bed (503.51 minutes, ~8.4 hours).
-#This indicates users might catch up on sleep on Sundays, reflecting a common recovery trend after a busy week. This is likely an effort to recover from sleep deficits accumulated during the week.
+- Sunday being the highest average sleep time (452.75 minutes, ~7.5 hours) and longest time in bed (503.51 minutes, ~8.4 hours).
+- This indicates users might catch up on sleep on Sundays, reflecting a common recovery trend after a busy week. This is likely an effort to recover from sleep deficits accumulated during the week.
 #In the graphs above we can deduce that users don’t take the recommended amount of sleep of 8 hours(480minutes).
-```
-**Steps per weekdays88
+  
+**Steps per weekdays**
 ```
 weekday_steps <- daily_activity %>%
   mutate(weekday = weekdays(date))
