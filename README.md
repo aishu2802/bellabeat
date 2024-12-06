@@ -51,7 +51,7 @@ Only 30 user data is available. The central limit theorem general rule of n≥30
 
 • **Cited:** CC0: Public Domain, dataset made available through Mobius.
 
-## PROCESS
+## Process Phase
 I will be choosing R for this project because, while I have some experience with tools like SQL and Excel, R is a new and exciting tool for me. My only exposure to R so far has been during this Certification course. R allows me to perform data cleaning, processing, and visualization efficiently within a single platform, making it an excellent choice for managing and presenting data insights effectively.
 
 **Setting up my working directory**
@@ -458,3 +458,54 @@ class(hourly_steps$date_time)
 ```
 ## [1] "POSIXct" "POSIXt"
 ```
+
+## Analyse 
+**Percentage Distribution of Active Minutes**
+```
+activity_summary <- daily_activity %>%
+  group_by(id) %>%
+  summarise(
+    veryactiveminutes = sum(veryactiveminutes, na.rm = TRUE),
+    fairlyactiveminutes = sum(fairlyactiveminutes, na.rm = TRUE),
+    lightlyactiveminutes = sum(lightlyactiveminutes, na.rm = TRUE),
+    sedentaryminutes = sum(sedentaryminutes, na.rm =TRUE)
+  )
+
+activity_summary <- activity_summary %>%
+  select(veryactiveminutes, fairlyactiveminutes, lightlyactiveminutes, sedentaryminutes) %>% 
+  pivot_longer(cols = everything(), names_to = "ActivityType", values_to = "Minutes") %>%
+  mutate(Percentage = (Minutes / sum(Minutes)) * 100)
+
+head(activity_summary)
+```
+```
+## # A tibble: 6 × 3
+##   ActivityType         Minutes Percentage
+##   <chr>                  <dbl>      <dbl>
+## 1 veryactiveminutes       1200     0.105 
+## 2 fairlyactiveminutes      594     0.0518
+## 3 lightlyactiveminutes    6818     0.595 
+## 4 sedentaryminutes       26293     2.30  
+## 5 veryactiveminutes        269     0.0235
+## 6 fairlyactiveminutes      180     0.0157
+```
+**Vizualization for Percentage Distribution of Active Minutes**
+```
+plot_ly(activity_summary, labels = ~ActivityType, values = ~Minutes,
+        type = 'pie',textposition = 'outside', textinfo = 'percent',
+  text = ~paste(ActivityType, ": ", round(Percentage, 2), "%"),
+  marker = list(colors = c('#AADEA7', '#64C2A6', '#F6AB49', '#F66D44')),
+  width = 500,  # Set the width of the chart
+  height = 500  # Set the height of the chart
+) %>%
+  layout(
+    title = 'Percentage Distribution of Active Minutes'
+  )
+```
+**Key Observations from the Chart:**
+
+Percentage of active minutes in the four categories: very active, fairly active, lightly active and sedentary.
+
+The major issue here is the large portion of time spent sedentary and the minimal time spent in high-intensity activities (very active and fairly active).
+
+This pattern is common in modern lifestyles but can have serious consequences for long-term health. Gradually increase the percentage of time spent in moderate-to-vigorous activities.
