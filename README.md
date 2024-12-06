@@ -18,8 +18,15 @@ The company was founded in 2013 by Urška Sršen and Sando Mur and has expanded 
 
 **Key Stakeholders:**
 
-· Urška Sršen — Bellabeat’s cofounder and Chief Creative Officer
+· **Urška Sršen** — Bellabeat’s cofounder and Chief Creative Officer
 
-· Sando Mur — Mathematician and Bellabeat’s cofounder; key member of the Bellabeat executive team
+· **Sando Mur** — Mathematician and Bellabeat’s cofounder; key member of the Bellabeat executive team
 
-· Bellabeat marketing analytics team — A team of data analysts responsible for collecting, analyzing, and reporting data that helps guide Bellabeat’s marketing strategy.
+· **Bellabeat marketing analytics team** — A team of data analysts responsible for collecting, analyzing, and reporting data that helps guide Bellabeat’s marketing strategy.
+
+## PREPARE
+Data Source: <a href="https://www.kaggle.com/datasets/arashnic/fitbit">FitBit Fitness Tracker Data</a>
+
+Data Organisation This data set contains personal fitness tracker from thirty fitbit users provided with 18 .CSV files. Data is organized in a long and wide format. The file contains detailed information about daily activity, sleep, weight, calories, and intensities.
+
+The FitBit Fitness Tracker Data was collected in 2016 making the datasets outdated for current trend analysis. Additionally, while the data initially states a time range of 03-12-2016 to 05-12-2016, I am considering only the dataset with most recent available data (4/12/2016 to 5/12/2016).
