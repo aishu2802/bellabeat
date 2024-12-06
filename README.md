@@ -54,3 +54,13 @@ Only 30 user data is available. The central limit theorem general rule of n≥30
 ## PROCESS
 I will be choosing R for this project because, while I have some experience with tools like SQL and Excel, R is a new and exciting tool for me. My only exposure to R so far has been during this Certification course. R allows me to perform data cleaning, processing, and visualization efficiently within a single platform, making it an excellent choice for managing and presenting data insights effectively.
 
+```R
+install.packages("tidyverse")
+install.packages("skimr")
+install.packages("janitor")
+install.packages("dplyr")
+install.packages("ggplot2")
+install.packages("tidyr")
+install.packages("lubridate")
+install.packages("plotly")
+```
